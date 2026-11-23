@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyBook - Flight Ticket Booking</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <a class="brand" href="#" onclick="show('home')">✈ SkyBook</a>
+
+    <nav>
+        <button onclick="show('home')">Home</button>
+        <button onclick="show('search')">Search Flights</button>
+        <button onclick="show('mybookings')">My Bookings</button>
+        <button id="authNav" onclick="show('account')">Login / Register</button>
+        <button id="adminNav" class="hidden" onclick="show('admin')">Admin</button>
+        <button id="logoutNav" class="hidden" onclick="logout()">Logout</button>
+    </nav>
+</header>
+
+<main>
+
+<!-- HOME PAGE -->
+<section id="home" class="page active">
+
+    <div class="hero">
+        <div>
+            <span class="eyebrow">TRAVEL MADE SIMPLE</span>
+
+            <h1>
+                Find your next<br>
+                <em>great journey.</em>
+            </h1>
+
+            <p>
+                Search flights, choose your seat and book
+                your ticket in a few simple steps.
+            </p>
+
+            <button class="primary" onclick="show('search')">
+                Explore Flights →
+            </button>
+        </div>
+
+        <div class="hero-art">
+            ✈
+            <div class="cloud c1">☁</div>
+            <div class="cloud c2">☁</div>
+            <div class="route-line"></div>
+            <small>YOUR JOURNEY STARTS HERE</small>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <article>
+            <b>🔎 Easy Search</b>
+            <p>Find flights by city and travel date.</p>
+        </article>
+
+        <article>
+            <b>💺 Seat Selection</b>
+            <p>Choose from available seats.</p>
+        </article>
+
+        <article>
+            <b>🎫 E-Ticket</b>
+            <p>Get a booking confirmation instantly.</p>
+        </article>
+    </div>
+
+</section>
+
+<!-- ACCOUNT PAGE -->
+<section id="account" class="page">
+
+    <div class="two-col">
+
+        <div class="card">
+            <h2>Create Account</h2>
+
+            <form id="registerForm">
+
+                <label>Full Name</label>
+                <input name="name" required>
+
+                <label>Email</label>
+                <input name="email" type="email" required>
+
+                <label>Phone</label>
+                <input name="phone">
+
+                <label>Password</label>
+                <input name="password" type="password" minlength="6" required>
+
+                <button class="primary">Register</button>
+
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Welcome Back</h2>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+                <input name="email" type="email" required>
+
+                <label>Password</label>
+                <input name="password" type="password" required>
+
+                <button class="primary">Login</button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <div id="accountMsg" class="message"></div>
+
+</section>
+
+<!-- FLIGHT SEARCH PAGE -->
+<section id="search" class="page">
+
+    <div class="section-head">
+        <span class="eyebrow">PLAN YOUR TRIP</span>
+        <h1>Search Flights</h1>
+        <p>Select your departure city, destination and travel date.</p>
+    </div>
+
+    <form id="searchForm" class="search-box">
+
+        <div>
+            <label>From City</label>
+
+            <select name="from" required>
+                <option value="">Select Departure City</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mangaluru">Mangaluru</option>
+                <option value="Mysuru">Mysuru</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Goa">Goa</option>
+                <option value="Kolkata">Kolkata</option>
+            </select>
+        </div>
+
+        <div>
+            <label>To City</label>
+
+            <select name="to" required>
+                <option value="">Select Destination City</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Mangaluru">Mangaluru</option>
+                <option value="Mysuru">Mysuru</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Goa">Goa</option>
+                <option value="Kolkata">Kolkata</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Travel Date</label>
+            <input name="date" type="date" required>
+        </div>
+
+        <button class="primary" type="submit">
+            🔎 Search Flights
+        </button>
+
+    </form>
+
+    <div id="flightResults"></div>
+
+</section>
+
+<!-- MY BOOKINGS -->
+<section id="mybookings" class="page">
+
+    <div class="section-head">
+        <span class="eyebrow">YOUR TRAVEL</span>
+        <h1>My Bookings</h1>
+    </div>
+
+    <div id="myBookingList"></div>
+
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="admin" class="page">
+
+    <div class="section-head">
+        <span class="eyebrow">MANAGEMENT</span>
+        <h1>Admin Dashboard</h1>
+    </div>
+
+    <div class="card">
+
+        <h2>Add New Flight</h2>
+
+        <form id="flightForm" class="form-grid">
+
+            <input name="flightNumber" placeholder="Flight Number" required>
+
+            <input name="airline" placeholder="Airline Name" required>
+
+            <input name="sourceCity" placeholder="Source City" required>
+
+            <input name="destinationCity" placeholder="Destination City" required>
+
+            <label>
+                Departure
+                <input name="departureTime" type="datetime-local" required>
+            </label>
+
+            <label>
+                Arrival
+                <input name="arrivalTime" type="datetime-local" required>
+            </label>
+
+            <input name="price" type="number" min="1" placeholder="Ticket Price" required>
+
+            <input name="totalSeats" type="number" min="1" placeholder="Total Seats" required>
+
+            <button class="primary">Add Flight</button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+        <h2>All Bookings</h2>
+        <div id="adminBookingList"></div>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    © 2026 SkyBook | Flight Ticket Booking System
+</footer>
+
+<!-- BOOKING MODAL -->
+<div id="modal" class="modal hidden">
+
+    <div class="modal-card">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
